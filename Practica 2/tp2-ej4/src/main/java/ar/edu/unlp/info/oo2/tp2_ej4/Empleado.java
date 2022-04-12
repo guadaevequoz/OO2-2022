@@ -29,17 +29,5 @@ public abstract class Empleado {
 	public void setAdicional(int adicional) {
 		this.adicional = adicional;
 	}
-
-	/*
-	public double getDescuento() {
-		return descuento;
-	}
-
-
-	public void setDescuento(double descuento) {
-		this.descuento = descuento;
-	}
-	*/
-	
 	
 }

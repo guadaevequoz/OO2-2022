@@ -73,11 +73,12 @@ class DirectorioTest {
         assertEquals(backup2015, conSubdirectorios.archivoMasNuevo());
     }
 
+    //FUNCIONAAAAAAA
     @Test
     void testTamanoTotalOcupado() {
-        assertEquals(32, vacio.tamanoTotalOcupado());
-        assertEquals(160, conUnArchivo.tamanoTotalOcupado()); //32 del directorio + 128 del archivo
-        assertEquals(2010042, conVariosArchivos.tamanoTotalOcupado()); //  2M de grande + 10K + 0 + 10 + 32 directorio
+        assertEquals(32, vacio.getTamaño());
+        assertEquals(160, conUnArchivo.getTamaño()); //32 del directorio + 128 del archivo
+        assertEquals(2010042, conVariosArchivos.getTamaño()); //  2M de grande + 10K + 0 + 10 + 32 directorio
         //assertEquals(256690128, conSubdirectorios.tamanoTotalOcupado());
     }
 

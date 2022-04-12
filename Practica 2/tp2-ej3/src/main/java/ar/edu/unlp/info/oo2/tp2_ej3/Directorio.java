@@ -2,54 +2,49 @@ package ar.edu.unlp.info.oo2.tp2_ej3;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
-public class Directorio extends Archivo{
-	private String nombre;
-	private LocalDate fecha;
-	private int tamaño = 32; //en kb
-	private ArrayList<Archivo> archivos;
+public class Directorio extends FSObject{
+	private List<FSObject> contenido;
 	
 	public Directorio(String nombre, LocalDate fecha) {
-		super(nombre,fecha);
-		this.archivos = new ArrayList<Archivo>();
+		super(nombre,fecha, 32);
+		this.contenido = new ArrayList<FSObject>();
 	}
 
-	 public double tamanoTotalOcupado() {
-		 return this.tamaño + (archivos.stream().mapToInt(a -> a.getTamaño()).sum());
-	 }
-
-	 //si tiene directorios cómo buscar dentro de esos directorios??
 	 public Archivo archivoMasGrande() {
-		 int max = -9999;
-		 Archivo aMax = null;
-		 for(Archivo a: this.archivos) {
-			 if(a.getTamaño() > max) {
-				 max = a.getTamaño();
-				 aMax = a;
-			 }
-		 }
-		 return aMax;
+		  return this.contenido
+				  .stream()
+				  .map(fso -> fso.archivoMasGrande())
+				  .filter(archivo -> archivo != null)
+				  .max(Comparator.comparingInt(a -> a.getTamaño()))
+				  .orElse(null);
+		 
 	 }
 	 
 	 public Archivo archivoMasNuevo() {
-		 LocalDate max = LocalDate.of(1977,01,01);
-		 Archivo aMax = null;
-		 for(Archivo a: this.archivos) {
-			 if(a.getFecha().isAfter(max)) {
-				 max = a.getFecha();
-				 aMax = a;
-			 }
-		 }
-		 return aMax;
+		 
+		 return this.contenido
+		 	.stream()
+		 	.map(fso -> fso.archivoMasNuevo())
+		 	.filter(archivo -> archivo != null) //filtro nulos
+		 	.max(Comparator.comparing(a -> a.getFecha())) //comparator resumido SIGUE SIENDO UN COMPARATOR 
+		 	.orElse(null); //si el dir esta vacio devuelvo null
+		 
 	 }
 
-	public void agregar(Archivo archivo) {
-		this.archivos.add(archivo);
+	public void agregar(FSObject archivo) {
+		this.contenido.add(archivo);
 		
 	}
 	
-	public ArrayList<Archivo> getArchivos(){
-		return this.archivos;
+	public List<FSObject> getArchivos(){
+		return this.contenido;
+	}
+
+	public int getTamaño() {
+		return this.tamaño + (contenido.stream().mapToInt(a -> a.getTamaño()).sum());
 	}
 
 	       

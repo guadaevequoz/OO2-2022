@@ -14,16 +14,34 @@ public class Decodificador {
 		setSugerencia(new Novedad());
 	}
 	
+	public Decodificador() {
+		this.conocidas = new ArrayList<Pelicula>();
+		this.grillaEmpresa = new ArrayList<Pelicula>();
+		setSugerencia(new Novedad());
+	}
+	
 	public void comprarPelicula(Pelicula p) {
+		this.grillaEmpresa.add(p);
+	}
+	
+	public void agregarConocida(Pelicula p) {
 		this.conocidas.add(p);
 	}
 	
-	public ArrayList<Pelicula> sugerirPelicula(Pelicula p) {
-		return this.sugerencia.sugerir(grillaEmpresa);
+	public List<Pelicula> sugerirPelicula() {
+		return this.sugerencia.sugerir(this);
 	}
 
 	public void setSugerencia(Sugerencia sugerencia) {
 		this.sugerencia = sugerencia;
+	}
+
+	public List<Pelicula> getGrillaEmpresa() {
+		return grillaEmpresa;
+	}
+	
+	public List<Pelicula> getConocidas() {
+		return conocidas;
 	}
 	
 }

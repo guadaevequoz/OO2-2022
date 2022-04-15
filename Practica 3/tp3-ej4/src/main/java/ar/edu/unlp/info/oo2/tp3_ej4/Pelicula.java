@@ -11,7 +11,15 @@ public class Pelicula {
 	
 	public Pelicula(String titulo, int añoEstreno, double puntaje, List<Pelicula> similares) {
 		super();
-		this.titulo = titulo;
+		this.setTitulo(titulo);
+		this.añoEstreno = añoEstreno;
+		this.puntaje = puntaje;
+		this.similares = similares;
+	}
+	
+	public Pelicula(String titulo, int añoEstreno, double puntaje) {
+		super();
+		this.setTitulo(titulo);
 		this.añoEstreno = añoEstreno;
 		this.puntaje = puntaje;
 		this.similares = new ArrayList<Pelicula>();
@@ -29,5 +37,18 @@ public class Pelicula {
 		return similares;
 	}
 	
-	
+	public void addSimilarMovie(Pelicula m) {
+		if(!this.similares.contains(m)) {
+			this.similares.add(m);			
+			m.addSimilarMovie(this);
+		}
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
 }

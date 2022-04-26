@@ -11,7 +11,9 @@ Considero que es un cambio adecuado ya que no deberia ser responsabilidad de la 
 
 ## 2.3)
 
-`public void imprimirValores() { int totalEdades = 0; double promedioEdades = 0; double totalSalarios = 0; for (Empleado empleado : personal) { totalEdades = totalEdades + empleado.getEdad(); totalSalarios = totalSalarios + empleado.getSalario(); } promedioEdades = totalEdades / personal.size(); String message = String.format("El promedio de las edades es %s y el total de salarios es %s", promedioEdades, totalSalarios); System.out.println(message); } `
+``` 
+public void imprimirValores() { int totalEdades = 0; double promedioEdades = 0; double totalSalarios = 0; for (Empleado empleado : personal) { totalEdades = totalEdades + empleado.getEdad(); totalSalarios = totalSalarios + empleado.getSalario(); } promedioEdades = totalEdades / personal.size(); String message = String.format("El promedio de las edades es %s y el total de salarios es %s", promedioEdades, totalSalarios); System.out.println(message); } 
+```
 
 - Como el codigo es muy largo separaria en distintos metodos acorde a cada accion que se hace. Querian tres metodos en vez de 1 solo:
   - uno para promediar edades

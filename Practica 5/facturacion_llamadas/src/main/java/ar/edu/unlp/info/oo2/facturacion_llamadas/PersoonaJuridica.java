@@ -14,10 +14,7 @@ public class PersoonaJuridica extends Persoona{
 		this.cuit = cuit;
 	}
 	@Override
-	protected double calcularMontoTotalLlamadas() {
-		double c = this.llamadas.stream()
-				.mapToDouble(l -> l.getCosto())
-				.sum();
-		return c - (c * 0.15);
+	public double calcularDescuento(double costo) {
+		return 0.15 * costo;
 	}
 }

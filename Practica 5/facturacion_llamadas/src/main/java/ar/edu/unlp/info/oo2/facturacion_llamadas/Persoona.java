@@ -37,9 +37,13 @@ public abstract class Persoona {
 		this.llamadas.add(x);
 	}
 
-	protected abstract double calcularMontoTotalLlamadas();;
+	protected double calcularMontoTotalLlamadas() {
+		return this.llamadas.stream()
+				.mapToDouble(l -> l.getCosto() - calcularDescuento(l.getCosto()))
+				.sum();
+	};
 	
-	
+	public abstract double calcularDescuento(double costoBase);
 	
 
 	

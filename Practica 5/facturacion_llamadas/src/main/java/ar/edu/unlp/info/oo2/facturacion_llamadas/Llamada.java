@@ -38,7 +38,11 @@ public abstract class Llamada {
 		this.remitente = remitente;
 	}
 	
-	public abstract double getCosto();
+	public double getCosto() {
+		return base() + impuesto();
+	};
 	
+	protected abstract double base();
+	private double impuesto() {return base() * 0.21;}
 	
 }

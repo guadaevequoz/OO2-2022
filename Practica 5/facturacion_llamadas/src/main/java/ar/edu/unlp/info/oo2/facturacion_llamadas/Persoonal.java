@@ -2,11 +2,14 @@ package ar.edu.unlp.info.oo2.facturacion_llamadas;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class Persoonal {
-	List<Persoona> personas = new ArrayList<Persoona>();
-	List<Llamada> llamadas = new ArrayList<Llamada>();
-	GuiaTelefonica guia = new GuiaTelefonica();
+	private List<Persoona> personas = new ArrayList<Persoona>();
+	private List<Llamada> llamadas = new ArrayList<Llamada>();
+	private SortedSet<String> guia = new TreeSet<String>();
+	/*GuiaTelefonica guia = new GuiaTelefonica();*/
 	/*static double descuentoJur = 0.15;
 	static double descuentoFis = 0;*/
 	
@@ -21,11 +24,11 @@ public class Persoonal {
 			encontre= false;
 			return encontre;
 		}*/
-		return guia.agregarTelefono(str);
+		return guia.add(str);
 	}
-	
+	/*
 	public Persoona registrarUsuario(String data, String nombre, String tipo) {
-		/*Persoona var = new Persoona();
+		Persoona var = new Persoona();
 		if (t.equals("fisica")) {
 			var.setNya(nombre);
 			String tel = lista3.guia.last();
@@ -44,23 +47,25 @@ public class Persoonal {
 		}
 		var.sis = this;
 		lista1.add(var);
-		return var;*/
-		Persoona persona = this.determinarPersona(data,nombre,tipo);
-		personas.add(persona);
-		return persona;
+		return var;
+	}*/
+	
+	public Persoona registrarUsuarioFisico(String dni, String nombre) {
+		Persoona per = new PersoonaFisica(nombre,this.getNumeroTelefono(),dni);
+		personas.add(per);
+		return per;
 	}
 	
-	private Persoona determinarPersona(String data, String nombre, String tipo) {
-		if(tipo.equals("fisica")) {
-			return new PersoonaFisica(nombre,this.getNumeroTelefono(),data);
-		}else if (tipo.equals("juridica")) {
-			return new PersoonaJuridica(nombre, this.getNumeroTelefono(), data);
-		}
-		return null;
+	public Persoona registrarUsuarioJuridico(String nombre, String cuit) {
+		Persoona per = new PersoonaFisica(nombre,this.getNumeroTelefono(),cuit);
+		personas.add(per);
+		return per;
 	}
 
 	private String getNumeroTelefono() {
-		return guia.obtenerNumero();
+		String num = guia.last();
+		guia.remove(num);
+		return num;
 	}
 
 	public boolean eliminarUsuario(Persoona p) {
@@ -72,67 +77,34 @@ public class Persoonal {
 			borre = true;
 		}
 		return borre;*/
-		if(this.existeUsuario(p)) {
-			personas.remove(p);
-			guia.agregarNumero(p.getTel());
+		if(personas.remove(p)) {
+			guia.add(p.getTel());
 			return true;
 		}
 		return false;
 	}
 	
-	public Llamada registrarLlamada(Persoona emisor, Persoona receptor, String tipo, int duracion) {
-		/*Llamada x = new Llamada();
+	/*public Llamada registrarLlamada(Persoona emisor, Persoona receptor, String tipo, int duracion) {
+		Llamada x = new Llamada();
 		x.tipoDeLlamada = t;
 		x.setEmisor(q.tel);
 		x.setRemitente(q2.getTel());
 		x.dur= d;
 		lista2.add(x);
 		q.lista1.add(x);
-		return x;*/
-		Llamada llamada = this.determinarLlamada(emisor, receptor, tipo, duracion);
+		return x;
+	}*/
+	
+	public Llamada registrarLlamadaNacional(String emisor, String receptor, int duracion) {
+		Llamada llamada = new LlamadaNacional(emisor,receptor,duracion);
 		llamadas.add(llamada);
-		emisor.agregarLlamada(llamada);
 		return llamada;
 	}
 	
-	private Llamada determinarLlamada(Persoona emisor, Persoona receptor, String tipo, int duracion) {
-		if(tipo.equals("nacional")) {
-			return new LlamadaNacional(emisor.getTel(),receptor.getTel(),duracion);
-		}else if (tipo.equals("internacional")) {
-			return new LlamadaInternacional(emisor.getTel(),receptor.getTel(),duracion);
-		}
-		return null;
-	}
-	
-	public double calcularMontoTotalLlamadas(Persoona p) {
-		/*double c = 0;
-		Persoona aux = null;
-		for (Persoona pp : lista1) {
-			if (pp.tel == p.getTel()) {
-				aux = pp;
-				break;
-			}
-		} if (aux == null) return c;
-		if (aux != null) {
-			for (Llamada l : aux.lista1) {
-				double auxc = 0;
-				if (l.tipoDeLlamada == "nacional") {
-					auxc += l.dur *3 + (l.dur*3*0.21);
-				} else if (l.tipoDeLlamada == "internacional") {
-					auxc += l.dur *200 + (l.dur*200*0.21);
-				}
-				
-				if (aux.t == "fisica") {
-					auxc -= auxc*descuentoFis;
-				} else if(aux.t == "juridica") {
-					auxc -= auxc*descuentoJur;
-				}
-				c += auxc;
-			}
-		}
-		return c;*/
-		double costo = p.calcularMontoTotalLlamadas();
-		return costo;
+	public Llamada registrarLlamadaInternacional(String emisor, String receptor, int duracion) {
+		Llamada llamada = new LlamadaInternacional(emisor,receptor,duracion);
+		llamadas.add(llamada);
+		return llamada;
 	}
 
 	public int cantidadDeUsuarios() {

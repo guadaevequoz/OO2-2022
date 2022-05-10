@@ -16,9 +16,7 @@ public class PersoonaFisica extends Persoona{
 	}
 	
 	@Override
-	protected double calcularMontoTotalLlamadas() {
-		return this.llamadas.stream()
-				.mapToDouble(l -> l.getCosto())
-				.sum();
+	public double calcularDescuento(double costo) {
+		return 0 * costo;
 	}
 }
